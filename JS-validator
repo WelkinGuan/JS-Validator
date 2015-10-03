@@ -1,0 +1,141 @@
+<!Doctype html>
+<html>
+<head>
+    <title>JS 验证</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css"> <!--调用Bootstrap样式-->
+    <!--<link rel="stylesheet" type="text/css" href="style.css">--> <!--自制样式-->
+    <script src="bootstrap.min.js"></script> <!--调用Bootstrap JS 脚本-->
+    <style>
+        body {background-image: url('DSC_0177.JPG');background-size: cover;}
+        h1 {font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;color: #FFFFFF;text-align: center;height: 8rem;font-size: 4rem;}
+        p {font-family: "Cardo", "Helvetica Neue", Helvetica, Arial, sans-serif;color: #FFFFFF;text-align:center;font-size: small;}
+        form {text-align: center;color: #FFFFFF;font-weight: bold;}
+        .fill_in_text {color: #FFFFFF;font-weight: normal;font-family: Menlo, Monaco, Consolas, "Courier New", monospace;}
+        .border_style {font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;border-left: none;border-right: none;border-top: none;border-bottom: groove;background-color: transparent;}
+        .button_style {font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;color: #FFFFFF;background-color: #000000;border-left: none;border-right: none;border-top: none;}
+        #seperate {height: 8rem;}
+        .ptext {text-align: center;font-size: small;font-family: Menlo, Monaco, Consolas, "Courier New", monospace;}
+    </style>
+</head>
+
+<body>
+<h1>JS VALIDATION</h1>
+<P>I try to validate the name, mobile phone and email address.</P>
+<p class="ptext">这张照片是我在美国Ohio州Sandusky小镇的Erie湖的旁边拍摄的，当时是傍晚7点钟，黄昏快要结束，老人在湖边钓完鱼反身回家时，我抓拍的剪影。<br/>颜色的饱满和立意是我喜欢这张照片的原因，还有远处的云，被夕阳的光渲染的向远处有山一样。</P>
+<p id="seperate"></p> <!-- 用来分割<p>和表单距离 -->
+
+
+<form action="#" method="post" class="form-group"> <!--用户名表单-->
+    <input type="text"
+           name="user"
+           size="30"
+           value="Please fill in your surname"
+           class="border_style fill_in_text"
+           onfocus="if(this.value.length !== 0 ){this.value=''}" /> <!--每次取得焦点之后，都清空表单内的值-->
+    <input type="button"
+           value="SUBMIT"
+           class="button_style"
+           onClick="return checkName(form)" /> <!--设置点击Submit按钮的方法-->
+</form>
+
+<form action="#" method="post" class="form-group">
+    <input type="text"
+            name="mobilePhone"
+            size="30"
+            value="Please fill in your mobile phone"
+            onfocus="if(this.value !== 0){this.value=''}"
+            class="border_style fill_in_text"/>
+    <input type="button"
+           value="SUBMIT"
+           class="button_style"
+           onClick="return checkMobilePhone(form)"/>
+</form>
+
+<form action="#" method="post" class="form-group">
+    <input type="text"
+           name="email"
+           size="30"
+           value="Please fill in your E-mail"
+           onfocus="if(this.value !== 0 ){this.value=''}"
+           class="border_style fill_in_text"/>
+    <input type="button"
+           value="SUBMIT"
+           class="button_style"
+           onClick="return checkEmail(form)"/>
+</form>
+<form action="#" method="post" class="form-group">
+    <input type="text"
+           name="password"
+           size="30"
+           value="Please fill in your password"
+           onfocus="if(this.value !== 0 ){this.value=''}"
+           class="border_style fill_in_text"/>
+    <input type="button"
+           value="SUBMIT"
+           class="button_style"
+           onClick="return checkPassword(form)" />
+</form>
+
+
+
+
+<script type="text/javascript">
+    function checkName(form) {
+        var regN = /^([a-zA-Z]{1,20})*$/; /*匹配1到20位无论大小写的英文字母*/
+        if (form.user.value == '') {
+            alert("Please fill in your surname!"); /*如果表单为空，alert提示填写*/
+        }
+        else if (regN.test(form.user.value.trim())) { /*测试匹配表单内的内容*/
+            return true;
+        }
+        else {
+            alert("Please fill in valid name!");
+        }
+    }
+
+    function checkMobilePhone(form) {
+        var regMP = /^(?:13\d|14[57]|15\d|17[05678]|18\d)-?\d{5}(\d{3}|\*{3})$/; /*匹配全号码段的手机号*/
+        if (form.mobilePhone.value == '') {
+            alert("Please fill in your mobile phone number!");
+        }
+        else if (isNaN(form.mobilePhone.value) === true || form.mobilePhone.value.length !== 11) { /*判断表单是不是全是数字，并确定长度*/
+            alert("Please fill in 11 numbers!");
+        }
+        else if (regMP.test(form.mobilePhone.value)) {
+            return true;
+        }
+        else {
+            alert("Please fill in valid mobile phone number!");
+        }
+    }
+
+    function checkEmail(form) {
+        var regE = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/; /* 匹配任意字符的email地址，确定有@. */
+        if (form.email.value == '') {
+            alert("Please fill in your email address!");
+        }
+        else if (regE.test(form.email.value)) {
+            return true;
+        } else {
+            alert("Please fill in valid email address!");
+        }
+    }
+
+    function checkPassword(form) {
+        var regP = /^\w{6,12}$/; /*匹配6到12位数字，单词，字符*/
+        if (form.password.value == '') {
+            alert("Please set your password!");
+        }
+        else if (regP.test(form.password.value)) {
+            return true;
+        }
+        else {
+            alert("The range of password is 6 to 12!");
+            return false;
+        }
+    }
+
+</script>
+</body>
+</html>
